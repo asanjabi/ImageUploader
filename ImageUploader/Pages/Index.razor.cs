@@ -25,7 +25,7 @@ namespace ImageUploader.Pages
         [Inject] IOptions<ConversionOptions>? ConversionOptions { get; set; }
         [Inject] IOptions<StorageOptions>? StorageOptions { get; set; }
 
-        private async Task LoadFiles(InputFileChangeEventArgs e)
+        private async Task LoadImage(InputFileChangeEventArgs e)
         {
             await JS.InvokeVoidAsync("previewImage", inputFile!.Element, previewImageElem);
 

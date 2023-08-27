@@ -2,7 +2,43 @@
 
 @inject IJSRuntime JS
 
-<InputFile multiple=false @ref="inputFile" OnChange="@LoadFiles" accept="image/*" capture></InputFile>
-<img style="max-width:200px;max-height:200px" @ref="previewImageElem" />
+@* <AuthorizeView>
+    <NotAuthorized>
+        <p>Please login to use the application</p>
+    </NotAuthorized>
+    <Authorized>
 
-<button @onclick=@ButtonClick>Click Me</button>
+    </Authorized>
+
+ </AuthorizeView>
+ *@
+
+<img class="image-preview" @ref="previewImageElem" />
+
+<label for="file-upload" class="custom-file-upload">
+    <i class="fa fa-cloud-upload"></i>
+    <Icon Name="IconName.Alarm" /> Take Photo
+</label>
+<InputFile id="file-upload" style="display:none" multiple=false @ref="inputFile" OnChange="@LoadImage" accept="image/*" capture></InputFile>
+
+<Icon Name="IconName.Alarm" Size="IconSize.x2" />
+<Icon Name="IconName.Alarm" Size="IconSize.x3" />
+<Icon Name="IconName.Alarm" Size="IconSize.x4" />
+<Icon Name="IconName.Alarm" Size="IconSize.x5" />
+
+@* <button @onclick=@ButtonClick>Click Me</button> *@
+
+@* <div class="form-group">
+    <label for="imageFile">Image File</label>
+    <InputFile multiple=false @ref="inputFile" OnChange="@LoadFiles" accept="image/*" capture></InputFile>
+</div>
+<div class="form-group">
+    <label for="imageFile">Preview</label>
+    <img style="max-width:200px;max-height:200px" @ref="previewImageElem" />
+</div>
+<div class="form-group">
+    <button class="btn btn-primary" @onclick=@ButtonClick>Upload</button>
+</div>
+
+ *@
+
