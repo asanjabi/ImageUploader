@@ -1,0 +1,8 @@
+﻿@page "/"
+
+@inject IJSRuntime JS
+
+<InputFile multiple=false @ref="inputFile" OnChange="@LoadFiles" accept="image/*" capture></InputFile>
+<img style="max-width:200px;max-height:200px" @ref="previewImageElem" />
+
+<button @onclick=@ButtonClick>Click Me</button>
