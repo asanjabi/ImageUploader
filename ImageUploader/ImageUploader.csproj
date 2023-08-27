@@ -7,9 +7,6 @@
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
 		<UserSecretsId>93c15dbe-038b-43cc-92b4-4a95db99660a</UserSecretsId>
 	</PropertyGroup>
-	<!--<PropertyGroup>
-		<PublishTrimmed>false</PublishTrimmed>
-	</PropertyGroup>-->
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.9.0" />
