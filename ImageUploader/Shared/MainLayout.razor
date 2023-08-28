@@ -1,14 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <main>
-        <div class="top-row px-4 auth">
+<div class="page d-flex flex-column">
+
+        <div class="top-row px-4 auth flex-shrink-0 flex-grow-0">
             <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 
-        <article class="content px-4">
+        <article class="content flex-fill">
             @Body
         </article>
-    </main>
+
 </div>

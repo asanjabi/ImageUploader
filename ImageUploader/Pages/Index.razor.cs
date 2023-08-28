@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
+using System.Runtime.CompilerServices;
+
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ImageUploader.Pages
@@ -18,6 +20,7 @@ namespace ImageUploader.Pages
     {
         private InputFile? inputFile;
         private ElementReference previewImageElem;
+
 
         [CascadingParameter] private Task<AuthenticationState>? authenticationStateTask { get; set; }
         [Inject] IAccessTokenProvider? tokenProvider { get; set; }
@@ -29,23 +32,23 @@ namespace ImageUploader.Pages
         {
             await JS.InvokeVoidAsync("previewImage", inputFile!.Element, previewImageElem);
 
-            if(authenticationStateTask is null) 
+            if (authenticationStateTask is null)
             {
                 return;
             }
-            if(tokenProvider is null)
+            if (tokenProvider is null)
             {
                 return;
             }
-            if(NavigationManager is null)
+            if (NavigationManager is null)
             {
                 return;
             }
-            if(ConversionOptions is null)
+            if (ConversionOptions is null)
             {
                 return;
             }
-            if(StorageOptions is null)
+            if (StorageOptions is null)
             {
                 return;
             }
@@ -90,16 +93,21 @@ namespace ImageUploader.Pages
                     now.Ticks
                     );
 
-                var blobUrl = new Uri($@"{StorageOptions.Value.StorageBaseUrl}/{blobName}");
+                //var blobUrl = new Uri($@"{StorageOptions.Value.StorageBaseUrl}/{blobName}");
 
-                var accessToken = new AccessTokenProviderTokenCredential(tokenProvider, NavigationManager);
-                var blob = new BlobClient(blobUrl, accessToken);
-                var bar = await blob.UploadAsync(image.OpenReadStream(1048576 * StorageOptions.Value.MaxFileSizeInMB));
+                //var accessToken = new AccessTokenProviderTokenCredential(tokenProvider, NavigationManager);
+                //var blob = new BlobClient(blobUrl, accessToken);
+                //var blobInfo = await blob.UploadAsync(image.OpenReadStream(1048576 * StorageOptions.Value.MaxFileSizeInMB));
             }
         }
-        private void ButtonClick()
+        private void Upload()
         {
 
+        }
+        
+        private void Clear()
+        {
+            this.previewImageElem.
         }
     }
 }

@@ -13,32 +13,35 @@
  </AuthorizeView>
  *@
 
-<img class="image-preview" @ref="previewImageElem" />
 
-<label for="file-upload" class="custom-file-upload">
-    <i class="fa fa-cloud-upload"></i>
-    <Icon Name="IconName.Alarm" /> Take Photo
-</label>
-<InputFile id="file-upload" style="display:none" multiple=false @ref="inputFile" OnChange="@LoadImage" accept="image/*" capture></InputFile>
+<div class="main d-flex flex-column h-100">
+    <div class="image-preview flex-fill">
+        <img @ref="previewImageElem" style="overflow: hidden"/>
+    </div>
 
-<Icon Name="IconName.Alarm" Size="IconSize.x2" />
-<Icon Name="IconName.Alarm" Size="IconSize.x3" />
-<Icon Name="IconName.Alarm" Size="IconSize.x4" />
-<Icon Name="IconName.Alarm" Size="IconSize.x5" />
+     <div class="button-row">
+        <label for="inputFile" class="btn me-1 btn-primary">
+            
+            <InputFile id="inputFile"
+                multiple=false
+                @ref="inputFile"
+                OnChange="@LoadImage" accept="image/*" capture
+                class="d-none" />
 
-@* <button @onclick=@ButtonClick>Click Me</button> *@
+            <Icon Name="IconName.Camera" Size="IconSize.x5" />
+            Take a picture
+        </label>
 
-@* <div class="form-group">
-    <label for="imageFile">Image File</label>
-    <InputFile multiple=false @ref="inputFile" OnChange="@LoadFiles" accept="image/*" capture></InputFile>
+
+        <Button Color="ButtonColor.Primary" @onclick=@Upload>
+            <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
+            Upload
+        </Button>
+
+        <Button Color="ButtonColor.Primary" @onclick=@Clear>
+            <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
+            Upload
+        </Button>
+    </div>
 </div>
-<div class="form-group">
-    <label for="imageFile">Preview</label>
-    <img style="max-width:200px;max-height:200px" @ref="previewImageElem" />
-</div>
-<div class="form-group">
-    <button class="btn btn-primary" @onclick=@ButtonClick>Upload</button>
-</div>
-
- *@
 

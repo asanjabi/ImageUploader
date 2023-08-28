@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
+using BlazorBootstrap;
+
 namespace ImageUploader;
 public class Program
 {
@@ -13,6 +15,8 @@ public class Program
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
+
+        builder.Services.AddBlazorBootstrap();
 
         builder.Services.Configure<ConversionOptions>(options => builder.Configuration.Bind(ConversionOptions.ConfigSectionName, options));
         builder.Services.Configure<StorageOptions>(options => builder.Configuration.Bind(StorageOptions.ConfigSectionName, options));
