@@ -2,12 +2,13 @@
 
 body, html {
     height: 100%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .page{
-    max-height: 100vh;
-    height: 100vh;
-    min-height: 100vh;
+    max-height: 100dvh;
+    height: 100dvh;
+    min-height: 100dvh;
 }
 
 .content {
@@ -23,20 +24,16 @@ body, html {
 }
 
 
+
+.lock-icon{
+    font-size: 7rem;
+}
+
 .button-row{
 }
 
-
 .custom-file-upload-input{
 
-}
-
-.file-upload {
-    /*display: none;*/
-}
-
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1:focus {

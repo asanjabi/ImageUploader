@@ -124,6 +124,8 @@ namespace ImageUploader.Pages
                 var accessToken = new AccessTokenProviderTokenCredential(tokenProvider, NavigationManager);
                 var blob = new BlobClient(blobUrl, accessToken);
                 var blobInfo = await blob.UploadAsync(image.OpenReadStream(1048576 * StorageOptions.Value.MaxFileSizeInMB));
+
+                await this.Clear();
             }
         }
 

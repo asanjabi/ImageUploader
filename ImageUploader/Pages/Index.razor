@@ -5,31 +5,33 @@
 <AuthorizeView>
     <NotAuthorized>
         <div class="d-flex d-flex flex-column h-100 justify-content-center align-items-center">
-        <Icon Name="IconName.Lock" Size="IconSize.x5"/>
-        <p>Please login to use the application</p>
+            <Icon Class="lock-icon" Name="IconName.Lock" />
+        <p class="h5">Please login to use the application</p>
         </div>
     </NotAuthorized>
     <Authorized>
         <div class="main d-flex flex-column h-100">
+
             <div class="image-preview flex-fill" hidden="@(!_showPreview)">
                 <img @ref="previewImageElem" class="img-fluid" style="overflow: hidden" />
             </div>
 
-            <div class="image-preview d-flex flex-fill justify-content-center align-items-center" hidden="@(_showPreview)">
-                <label for="inputFile" class="btn me-1 btn-primary" hidden="@(_showPreview)">
+            <div class="d-flex flex-fill justify-content-center align-items-center" hidden="@(_showPreview)">
+                <label for="inputFile" class="btn btn-lg btn-primary" hidden="@(_showPreview)"
+                       style="--bs-btn-font-size: 2rem;">
+                    <Icon Name="IconName.Camera" Style="font-size: 5rem;" />
+                    <br/>
+                    Take a picture
 
                     <InputFile id="inputFile"
                                multiple=false
-                    @ref="inputFile"
+                               @ref="inputFile"
                                OnChange="@LoadImage" accept="image/*" capture
                                class="d-none" />
-
-                    <Icon Name="IconName.Camera" Size="IconSize.x5" />
-                    Take a picture
                 </label>
             </div>
 
-            <div class="button-row d-flex justify-content-evenly">
+            <div class="button-row d-flex justify-content-center p-4 gap-2 btn-group">
                 <Button Color="ButtonColor.Primary" @onclick=@Upload Disabled=@_uploadDisabled>
                     <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
                     Upload
