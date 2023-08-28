@@ -2,46 +2,44 @@
 
 @inject IJSRuntime JS
 
-@* <AuthorizeView>
+<AuthorizeView>
     <NotAuthorized>
+        <div class="d-flex d-flex flex-column h-100 justify-content-center align-items-center">
+        <Icon Name="IconName.Lock" Size="IconSize.x5"/>
         <p>Please login to use the application</p>
+        </div>
     </NotAuthorized>
     <Authorized>
+        <div class="main d-flex flex-column h-100">
+            <div class="image-preview flex-fill" hidden="@(!_showPreview)">
+                <img @ref="previewImageElem" class="img-fluid" style="overflow: hidden" />
+            </div>
 
+            <div class="image-preview d-flex flex-fill justify-content-center align-items-center" hidden="@(_showPreview)">
+                <label for="inputFile" class="btn me-1 btn-primary" hidden="@(_showPreview)">
+
+                    <InputFile id="inputFile"
+                               multiple=false
+                    @ref="inputFile"
+                               OnChange="@LoadImage" accept="image/*" capture
+                               class="d-none" />
+
+                    <Icon Name="IconName.Camera" Size="IconSize.x5" />
+                    Take a picture
+                </label>
+            </div>
+
+            <div class="button-row d-flex justify-content-evenly">
+                <Button Color="ButtonColor.Primary" @onclick=@Upload Disabled=@_uploadDisabled>
+                    <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
+                    Upload
+                </Button>
+
+                <Button Color="ButtonColor.Primary" @onclick=@Clear Disabled=@_clearDisabled>
+                    <Icon Name="IconName.Trash3" Size="IconSize.x5" />
+                    Clear
+                </Button>
+            </div>
+        </div>
     </Authorized>
-
- </AuthorizeView>
- *@
-
-
-<div class="main d-flex flex-column h-100">
-    <div class="image-preview flex-fill">
-        <img @ref="previewImageElem" style="overflow: hidden"/>
-    </div>
-
-     <div class="button-row">
-        <label for="inputFile" class="btn me-1 btn-primary">
-            
-            <InputFile id="inputFile"
-                multiple=false
-                @ref="inputFile"
-                OnChange="@LoadImage" accept="image/*" capture
-                class="d-none" />
-
-            <Icon Name="IconName.Camera" Size="IconSize.x5" />
-            Take a picture
-        </label>
-
-
-        <Button Color="ButtonColor.Primary" @onclick=@Upload>
-            <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
-            Upload
-        </Button>
-
-        <Button Color="ButtonColor.Primary" @onclick=@Clear>
-            <Icon Name="IconName.CloudUpload" Size="IconSize.x5" />
-            Upload
-        </Button>
-    </div>
-</div>
-
+</AuthorizeView>

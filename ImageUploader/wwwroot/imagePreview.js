@@ -3,3 +3,8 @@ window.previewImage = (inputElem, imgElem) => {
     imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
     imgElem.src = url;
 }
+
+
+window.clearPreviewImage = (imgElem) => {
+    imgElem.src = "";
+}

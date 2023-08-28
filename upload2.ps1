@@ -1,1 +1,0 @@
-az storage blob upload-batch -d '$web' --account-name imaguploader -s .\publish\wwwroot --auth-mode login --overwrite true 

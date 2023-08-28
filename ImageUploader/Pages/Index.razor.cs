@@ -10,16 +10,17 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-using System.Runtime.CompilerServices;
-
-using static System.Net.Mime.MediaTypeNames;
-
 namespace ImageUploader.Pages
 {
     public partial class Index
     {
         private InputFile? inputFile;
         private ElementReference previewImageElem;
+
+        private IBrowserFile? _currentFile;
+        private bool _uploadDisabled = true;
+        private bool _clearDisabled = true;
+        private bool _showPreview = false;
 
 
         [CascadingParameter] private Task<AuthenticationState>? authenticationStateTask { get; set; }
@@ -30,8 +31,33 @@ namespace ImageUploader.Pages
 
         private async Task LoadImage(InputFileChangeEventArgs e)
         {
+            this._currentFile = e.File;
             await JS.InvokeVoidAsync("previewImage", inputFile!.Element, previewImageElem);
+            await this.UpdateUI();
+        }
 
+        private async Task UpdateUI()
+        {
+            if (this._currentFile == null)
+            {
+                this._clearDisabled = true;
+                this._uploadDisabled = true;
+                this._showPreview = false;
+            }
+            else
+            {
+                this._uploadDisabled = false;
+                this._clearDisabled = false;
+                this._showPreview = true;
+            }
+        }
+
+        private async Task Upload()
+        {
+            if (this.inputFile is null)
+            {
+                return;
+            }
             if (authenticationStateTask is null)
             {
                 return;
@@ -53,11 +79,11 @@ namespace ImageUploader.Pages
                 return;
             }
 
-            var file = e.GetMultipleFiles().FirstOrDefault();
+            var file = this._currentFile;
             if (file != null)
             {
                 IBrowserFile? image = null;
-                if(ConversionOptions.Value.Convert)
+                if (ConversionOptions.Value.Convert)
                 {
                     image = await file.RequestImageFileAsync(ConversionOptions.Value.Format, ConversionOptions.Value.maxWidth, ConversionOptions.Value.maxHeight);
                 }
@@ -68,7 +94,7 @@ namespace ImageUploader.Pages
 
                 var authState = await authenticationStateTask;
                 var user = authState.User;
-                if(user.Identity is null)
+                if (user.Identity is null)
                 {
                     return;
                 }
@@ -78,10 +104,10 @@ namespace ImageUploader.Pages
                 string formatString = StorageOptions.Value.FileNameFormatString;
 
                 var now = DateTime.UtcNow;
-                blobName = string.Format(formatString, 
+                blobName = string.Format(formatString,
                     user.Identity.Name,
                     image.Name,
-                    now.Day, 
+                    now.Day,
                     now.Month,
                     now.Year,
                     now.DayOfWeek.ToString(),
@@ -93,21 +119,19 @@ namespace ImageUploader.Pages
                     now.Ticks
                     );
 
-                //var blobUrl = new Uri($@"{StorageOptions.Value.StorageBaseUrl}/{blobName}");
+                var blobUrl = new Uri($@"{StorageOptions.Value.StorageBaseUrl}/{blobName}");
 
-                //var accessToken = new AccessTokenProviderTokenCredential(tokenProvider, NavigationManager);
-                //var blob = new BlobClient(blobUrl, accessToken);
-                //var blobInfo = await blob.UploadAsync(image.OpenReadStream(1048576 * StorageOptions.Value.MaxFileSizeInMB));
+                var accessToken = new AccessTokenProviderTokenCredential(tokenProvider, NavigationManager);
+                var blob = new BlobClient(blobUrl, accessToken);
+                var blobInfo = await blob.UploadAsync(image.OpenReadStream(1048576 * StorageOptions.Value.MaxFileSizeInMB));
             }
         }
-        private void Upload()
-        {
 
-        }
-        
-        private void Clear()
+        private async Task Clear()
         {
-            this.previewImageElem.
+            await JS.InvokeVoidAsync("clearPreviewImage", previewImageElem);
+            this._currentFile = null;
+            await this.UpdateUI();
         }
     }
 }

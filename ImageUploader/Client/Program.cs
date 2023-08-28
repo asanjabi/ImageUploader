@@ -18,6 +18,7 @@ public class Program
 
         builder.Services.AddBlazorBootstrap();
 
+
         builder.Services.Configure<ConversionOptions>(options => builder.Configuration.Bind(ConversionOptions.ConfigSectionName, options));
         builder.Services.Configure<StorageOptions>(options => builder.Configuration.Bind(StorageOptions.ConfigSectionName, options));
 
